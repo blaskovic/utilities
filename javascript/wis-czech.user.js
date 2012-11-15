@@ -6,7 +6,11 @@
 // // @include       http://wis.fit.vutbr.cz/FIT/
 // // ==/UserScript==
 
-if(document.location.href.indexOf("wis.fit.vutbr.cz") > 0 && document.location.href.indexOf(".php.cs") == -1)
+if(
+    document.location.href.indexOf("wis.fit.vutbr.cz") > 0 &&
+    document.location.href.indexOf(".php.cs") == -1 && 
+    document.location.href.indexOf(".php") != -1
+)
 {
     var url = document.location.href;
     url = url.replace(".php.en", ".php");
