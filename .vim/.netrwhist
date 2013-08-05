@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/home/branislav/.macromedia'
+let g:netrw_dirhist_2='/home/branislav/Repo/BachelorThesis/code'
+let g:netrw_dirhist_3='/home/branislav/Repo/Checkers/src'
+let g:netrw_dirhist_4='/home/branislav/Repo/Checkers/examples'
+let g:netrw_dirhist_5='/home/branislav/Repo/fedora-gooey-karma/src'

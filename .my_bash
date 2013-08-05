@@ -1,0 +1,78 @@
+#!/bin/bash
+
+#PS1='\[\e[0;36m\]$PS1NAME \[\e[0;32m\]\w\[\e[0;36m\] \$ \[\e[0m\]'
+__git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
+__git_branch_color="\[\033[34m\]"
+PS1="\[\e[0;36m\]$PS1NAME \`RC=\$? ; if [ \$RC = 0 ]; then echo \[\e[32m\]\$RC\[\e[0m\]; else echo \[\e[31m\]\$RC\[\e[0m\]; fi\` \[\e[0;32m\]\W $__git_branch_color$__git_branch\[\e[0;36m\]\$ \[\e[0m\]"
+
+export BUG_PROJECT=$HOME/todo.bug
+
+alias merlincek='ssh xblask00@merlin.fit.vutbr.cz'
+alias evicka='ssh xblask00@eva.fit.vutbr.cz'
+alias krocik='ssh xblask00@krok.fit.vutbr.cz'
+alias wedosserver='ssh branislav@31.31.72.75'
+alias cubie='ssh 192.168.2.138 -p 6000'
+alias ccc='clear'
+alias sai='sudo aptitude install'
+alias sau='sudo apt-get update'
+alias ll='ls -l' 
+alias la='ls -a' 
+alias lla='ls -al'
+alias ld='ls -l | grep ^d' 
+alias l='ls'
+alias s='ls'
+alias sl='ls'
+alias restart-apache='sudo /etc/init.d/apache2 restart'
+alias sk='setxkbmap sk -variant qwerty'
+alias en='setxkbmap us'
+alias laura='ssh branislav@laura.blaskovic.sk'
+
+hladaj()
+{
+	grep --colour=auto --color=always -nrIHIF "$1" *
+}
+
+update_my_bash()
+{
+	wget http://31.31.72.75/.my_bash -nv -O ~/.my_bash
+}
+
+update_vimrc()
+{
+	wget http://31.31.72.75/.vimrc -nv -O ~/.vimrc
+}
+
+repo_upload()
+{
+	rsync -ar --delete --exclude=.tmp_zaloha . repo@31.31.72.75:/home/repo/Repo
+}
+
+repo_download()
+{
+	mkdir -p .tmp_zaloha
+	rsync -ar --delete --exclude=.tmp_zaloha ./ .tmp_zaloha/
+	rsync -ar --delete --exclude=.tmp_zaloha repo@31.31.72.75:/home/repo/Repo/ ./
+}
+
+mcd()
+{
+	    mkdir -p $1; cd $1; 
+}
+
+wtf()
+{
+	blah=`echo $@ | sed -e 's/ /_/g'`; dig +short txt $blah.wp.dg.cx;
+}
+
+ndr_download()
+{
+	url=`wget "http://31.31.72.75/ndr.php?link=$@" -qO- `
+	wget "$url"
+}
+
+disk_analys()
+{
+	P="tee"
+	if [ $1 ]; then P="head -n ${1}"; fi
+	du -a -S --block-size m | sort -nr | $P | while read SIZE NAME; do echo $SIZE `ls -aFhd --color=always "${NAME}"`; done
+}
