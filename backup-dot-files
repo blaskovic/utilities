@@ -5,8 +5,8 @@
 for FILE in $FILES
 do
     cp -rfv ${RELATIVE}/${FILE} .
+    git add ${FILE}
 done
 
-git add *
 git commit -m "update"
 git push origin master
