@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#
+# Branislav Blaskovic
+#
+
+touch ~/screenshot.list
+name=$(scrot $@ -e 'echo $f')
+scp ~/$name blaskovic@31.31.72.75:public_html/data/ 2>&1 > /dev/null
+url="http://www.blaskovic.sk/data/$name"
+echo $url
+echo $url >> ~/screenshot.list
+rm -f ~/$name

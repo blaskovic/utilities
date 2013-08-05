@@ -1,0 +1,11 @@
+bindkey ^[q prev
+bindkey ^[w next
+
+defscrollback 10000
+vbell off
+
+backtick 1 60 60 /home/branislav/Documents/bin/gmail_count.sh
+
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{B}%H %{G}][%= %{= kw}%?%-Lw%?%{r}[%{W}%n*%f%t%?(%u)%?%{r}]%{w}%?%+Lw%?%?%= %{G}][ %{W}M:%1` %{B}%c%{W} %D %d/%m/%y %{G}]'
+
