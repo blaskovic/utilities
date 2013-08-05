@@ -3,4 +3,11 @@
 RELATIVE=~
 FILES=.vim .vimrc .screenrc .my_bash
 
+for FILE in FILES
+do
+    cp -rfv ${RELATIVE}/${FILE} .
+done
 
+git add *
+git commit -m "update"
+git push origin master
