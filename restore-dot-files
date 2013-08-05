@@ -1,0 +1,8 @@
+#!/bin/bash
+
+. config
+
+for FILE in $FILES
+do
+    cp -rfv ${FILE} ${RELATIVE}/${FILE}
+done

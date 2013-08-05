@@ -1,9 +1,8 @@
 #!/bin/bash
 
-RELATIVE=~
-FILES=.vim .vimrc .screenrc .my_bash
+. config
 
-for FILE in FILES
+for FILE in $FILES
 do
     cp -rfv ${RELATIVE}/${FILE} .
 done
