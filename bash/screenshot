@@ -11,7 +11,7 @@ if [ "x$1" = "x-i" ]
 then
     shift
     name=${@: -1}
-    [ x$name = x ] && name="screenshot-$RANDOM-`date '+%S'`.png"
+    [ x$name = x ] && name="screenshot-$RANDOM-$(date "+%s").png"
     import ~/$name
 else
     name=$(scrot $@ -e 'echo $f')
