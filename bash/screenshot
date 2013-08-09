@@ -5,10 +5,21 @@
 #
 
 touch ~/screenshot.list
-name=$(scrot $@ -e 'echo $f')
+
+# Is first argument -i? Use import then!
+if [ "x$1" = "x-i" ]
+then
+    shift
+    name=${@: -1}
+    [ x$name = x ] && name="screenshot-$RANDOM-`date '+%S'`.png"
+    import ~/$name
+else
+    name=$(scrot $@ -e 'echo $f')
+fi
 
 # If we want to upload it - do so.
 # Delete original then
+set -x
 zenity --question --title 'Upload' --text 'Want to upload this screenshot?' && {
     scp ~/$name blaskovic@31.31.72.75:public_html/data/ 2>&1 > /dev/null
     url="http://www.blaskovic.sk/data/$name"
