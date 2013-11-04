@@ -1,0 +1,70 @@
+#!/usr/bin/python
+
+#
+# Author: Branislav Blaskovic
+# <branislav@blaskovic.sk>
+#
+
+import Tkinter
+
+class ProjectHandler:
+    def __init__(self):
+        self.option_menu = None
+        self.entry_project_name = None
+
+    def start_project(self):
+        name = self.option_menu.get()
+        print 'Starting ', name
+
+    def stop_project(self):
+        name = self.option_menu.get()
+        print 'Stopping ', name
+
+    def add_project(self):
+        name = self.entry_project_name.get()
+        print 'Adding ', name
+
+# Project Handler object instance
+p = ProjectHandler()
+
+PROJECTS = [
+    "egg",
+    "bunny",
+    "chicken"
+]
+
+master = Tkinter.Tk()
+
+# Default project
+variable = Tkinter.StringVar(master)
+variable.set(PROJECTS[0])
+
+frame1 = Tkinter.Frame(master)
+frame2 = Tkinter.Frame(master)
+
+w = apply(Tkinter.OptionMenu, (frame1, variable) + tuple(PROJECTS))
+w.pack(side=Tkinter.LEFT)
+
+# Pass it to Project Handler
+p.option_menu = variable
+
+# Start/stop/delete buttons
+btn_start = Tkinter.Button(frame1, text='Start', command=p.start_project)
+btn_start.pack(side=Tkinter.LEFT)
+btn_stop = Tkinter.Button(frame1, text='Stop', command=p.stop_project)
+btn_stop.pack(side=Tkinter.LEFT)
+
+# First row done
+frame1.pack(expand=True)
+
+# Second row starting
+# Add project
+project_name = Tkinter.Entry(frame2)
+project_name.pack(side=Tkinter.LEFT)
+p.entry_project_name = project_name
+btn_add = Tkinter.Button(frame2, text='Add', command=p.add_project)
+btn_add.pack(side=Tkinter.LEFT)
+
+frame2.pack()
+
+Tkinter.mainloop()
