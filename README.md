@@ -1,4 +1,5 @@
-dotfiles
-========
+Some utilities made by me
+========================
 
-My dot files
+Branislav Blaskovic
+www.blaskovic.sk
