@@ -14,7 +14,7 @@ from datetime import datetime
 
 opts = None
 
-def parse_args ():
+def parse_args():
     p = optparse.OptionParser()
     p.add_option('-w', '--wait', action='store_true')
     p.add_option('-d', '--debug', action='store_true')
@@ -22,7 +22,7 @@ def parse_args ():
 
     return p.parse_args()
 
-def from_iso (date):
+def from_iso(date):
     if hasattr(date, 'dt'):
         return date.dt
     # XXX: This is a hack to deal with ISO format dates with a terminal
@@ -31,7 +31,7 @@ def from_iso (date):
         date = str(date)[:-1]
     return datetime.strptime(str(date), '%Y%m%dT%H%M%S')
 
-def mv_attr (attr):
+def mv_attr(attr):
     if isinstance(attr, basestring):
         val = [ attr ]
     else:
@@ -39,7 +39,7 @@ def mv_attr (attr):
 
     return val
 
-def print_vevent (event):
+def print_vevent(event):
     global opts
 
     event_start = from_iso(event['dtstart'])
@@ -110,7 +110,7 @@ def parse_ics(args):
         print 'Press RETURN to continue...'
         open('/dev/tty').readline()
 
-def main ():
+def main():
     global opts
     try:
         opts, args = parse_args()
