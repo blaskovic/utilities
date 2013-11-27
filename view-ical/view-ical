@@ -24,7 +24,7 @@ def parse_args():
 
 def from_iso(date):
     if hasattr(date, 'dt'):
-        return date.dt
+        return datetime.date(date.dt)
     # XXX: This is a hack to deal with ISO format dates with a terminal
     # 'Z', which aren't handled by the datetime module.
     if str(date).endswith('Z'):
@@ -111,6 +111,9 @@ def parse_ics(args):
             # Some parse error? Dont need that
             print 'Error: ', detail
             continue
+
+    # Sort by time
+    events.sort(key=lambda x: x['event_start'])
 
     # Print these events
     for x in events:
