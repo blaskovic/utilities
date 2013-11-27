@@ -19,6 +19,7 @@ def parse_args():
     p.add_option('-w', '--wait', action='store_true')
     p.add_option('-d', '--debug', action='store_true')
     p.add_option('-b', '--brief', action='store_true')
+    p.add_option('-f', '--from', dest="from_date", default=None)
 
     return p.parse_args()
 
@@ -109,7 +110,7 @@ def parse_ics(args):
                 events.append(get_items(x))
         except Exception, detail:
             # Some parse error? Dont need that
-            print 'Error: ', detail
+            sys.stderr.write('Error: ' + str(detail) + "\n")
             continue
 
     # Sort by time
@@ -117,6 +118,9 @@ def parse_ics(args):
 
     # Print these events
     for x in events:
+        # Do we even want this?
+        if opts.from_date and x['event_start'] < datetime.date(datetime.strptime(str(opts.from_date), '%Y-%m-%d')):
+            continue
         print_vevent(x)
 
     if opts.wait:
