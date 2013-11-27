@@ -18,6 +18,7 @@ def parse_args ():
     p = optparse.OptionParser()
     p.add_option('-w', '--wait', action='store_true')
     p.add_option('-d', '--debug', action='store_true')
+    p.add_option('-b', '--brief', action='store_true')
 
     return p.parse_args()
 
@@ -39,6 +40,7 @@ def mv_attr (attr):
     return val
 
 def print_vevent (event):
+    global opts
 
     event_start = from_iso(event['dtstart'])
     event_end = from_iso(event['dtend'])
@@ -56,28 +58,36 @@ def print_vevent (event):
     description = event.get('description', [])
     location = event.get('location', [])
 
-    print '='*70
-    print event['summary']
-    print '='*70
-    print
+    if opts.brief:
+        # Print in brief layout
+        print '%s = %s (%s)' % \
+            (event_start.strftime('%Y-%m-%d %H:%M'),
+            event['summary'],
+            location)
+    else:
+        # Print full layout
+        print '='*70
+        print event['summary']
+        print '='*70
+        print
 
-    print '       WHEN: %s - %s' % (event_start, event_end)
-    if location:
-      print '      WHERE: %s' % (location)
-    print ' ORGANIZERS:', '\n            '.join(organizers)
-    print '  ATTENDING:', '\n             '.join(attendees)
+        print '       WHEN: %s - %s' % (event_start, event_end)
+        if location:
+          print '      WHERE: %s' % (location)
+        print ' ORGANIZERS:', '\n            '.join(organizers)
+        print '  ATTENDING:', '\n             '.join(attendees)
 
-    if description:
-        print 'DESCRIPTION:', 
-        initial_indent=''
-        for line in description.split('\n'):
-            print textwrap.fill(line,
-                width=60,
-                initial_indent=initial_indent,
-                subsequent_indent='             ').encode('utf-8')
-            initial_indent='             '
+        if description:
+            print 'DESCRIPTION:', 
+            initial_indent=''
+            for line in description.split('\n'):
+                print textwrap.fill(line,
+                    width=60,
+                    initial_indent=initial_indent,
+                    subsequent_indent='             ').encode('utf-8')
+                initial_indent='             '
 
-    print
+        print
 
 def parse_ics(args):
     global opts
@@ -91,8 +101,9 @@ def parse_ics(args):
         try:
             if x.name == 'VEVENT':
                 print_vevent(x)
-        except:
+        except Exception, detail:
             # Some parse error? Dont need that
+            print 'Error: ', detail
             continue
 
     if opts.wait:
