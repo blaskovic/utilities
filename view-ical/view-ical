@@ -39,31 +39,35 @@ def mv_attr(attr):
 
     return val
 
+def get_items(event):
+    items = {}
+    items['summary'] = event['summary']
+    items['event_start'] = from_iso(event['dtstart'])
+    items['event_end'] = from_iso(event['dtend'])
+
+    items['organizers'] = mv_attr(event.get('organizer', []))
+    for i, organizer in enumerate(items['organizers']):
+        if organizer.lower().startswith('mailto'):
+            items['organizers'][i] = organizer[7:]
+
+    items['attendees'] = mv_attr(event.get('attendee', []))
+    for i, attendee in enumerate(items['attendees']):
+        if attendee.lower().startswith('mailto'):
+            items['attendees'][i] = attendee[7:]
+
+    items['description'] = event.get('description', [])
+    items['location'] = event.get('location', [])
+    return items
+
 def print_vevent(event):
     global opts
-
-    event_start = from_iso(event['dtstart'])
-    event_end = from_iso(event['dtend'])
-
-    organizers = mv_attr(event.get('organizer', []))
-    for i, organizer in enumerate(organizers):
-        if organizer.lower().startswith('mailto'):
-            organizers[i] = organizer[7:]
-
-    attendees = mv_attr(event.get('attendee', []))
-    for i, attendee in enumerate(attendees):
-        if attendee.lower().startswith('mailto'):
-            attendees[i] = attendee[7:]
-
-    description = event.get('description', [])
-    location = event.get('location', [])
 
     if opts.brief:
         # Print in brief layout
         print '%s = %s (%s)' % \
-            (event_start.strftime('%Y-%m-%d %H:%M'),
+            (event['event_start'].strftime('%Y-%m-%d %H:%M'),
             event['summary'],
-            location)
+            event['location'])
     else:
         # Print full layout
         print '='*70
@@ -71,16 +75,16 @@ def print_vevent(event):
         print '='*70
         print
 
-        print '       WHEN: %s - %s' % (event_start, event_end)
-        if location:
-          print '      WHERE: %s' % (location)
-        print ' ORGANIZERS:', '\n            '.join(organizers)
-        print '  ATTENDING:', '\n             '.join(attendees)
+        print '       WHEN: %s - %s' % (event['event_start'].strftime('%Y-%m-%d %H:%M'), event['event_end'].strftime('%Y-%m-%d %H:%M'))
+        if event['location']:
+          print '      WHERE: %s' % (event['location'])
+        print ' ORGANIZERS:', '\n            '.join(event['organizers'])
+        print '  ATTENDING:', '\n             '.join(event['attendees'])
 
-        if description:
+        if event['description']:
             print 'DESCRIPTION:', 
             initial_indent=''
-            for line in description.split('\n'):
+            for line in event['description'].split('\n'):
                 print textwrap.fill(line,
                     width=60,
                     initial_indent=initial_indent,
@@ -97,14 +101,20 @@ def parse_ics(args):
     except IndexError:
         cal = icalendar.cal.Calendar.from_ical(sys.stdin.read())
 
+    # Fill array with events
+    events = []
     for x in cal.walk():
         try:
             if x.name == 'VEVENT':
-                print_vevent(x)
+                events.append(get_items(x))
         except Exception, detail:
             # Some parse error? Dont need that
             print 'Error: ', detail
             continue
+
+    # Print these events
+    for x in events:
+        print_vevent(x)
 
     if opts.wait:
         print 'Press RETURN to continue...'
