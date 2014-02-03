@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#
+# Removes diakriticts from files tree
+# Author: Branislav Blaskovic
+#
+
+function remove_dia()
+{
+    out=$(iconv -t ASCII//TRANSLIT -f UTF-8 <<<"$@")
+    echo "$out"
+}
+
+function walk_tree()
+{
+    # Process current dirs
+    echo "DIRS: (`pwd`)"
+    find  -maxdepth 1 -type d | while read dir
+    do
+        # Dont need current dir
+        test "$dir" = "." && continue
+
+        # Rename it
+        new_dir="$(remove_dia $dir)"
+        echo "mv $dir $new_dir"
+        mv "$dir" "$new_dir"
+        pushd "$new_dir" >& /dev/null
+        walk_tree
+        popd >& /dev/null
+    done
+
+    # Process files in dir
+    echo "FILES: (`pwd`)"
+    find -maxdepth 1 -type f | while read file
+    do
+        # Rename it
+        new_file="$(remove_dia $file)"
+        echo "mv $file $new_file"
+        mv "$file" "$new_file"
+    done
+}
+
+walk_tree
