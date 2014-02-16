@@ -10,7 +10,7 @@ TMP2=`mktemp`
 
 function title()
 {
-    echo "[ $@ ]"
+    echo -e "\e[;1m[ $@ ]\e[;0m"
 }
 
 function prompt()
