@@ -1,0 +1,59 @@
+#!/bin/bash
+
+#
+# Interactive udisksctl [un]mounter
+# Author: Branislav Blaskovic
+#
+
+TMP1=`mktemp`
+TMP2=`mktemp`
+
+function title()
+{
+    echo "[ $@ ]"
+}
+
+function prompt()
+{
+    echo -n "> "
+    read key
+    echo "$key"
+}
+
+function get_lsblk_line()
+{
+    awk --assign "num=$1" 'NR==num' "$TMP1"
+}
+
+# Device chooser
+title "Choose block device"
+lsblk -l > "$TMP1"
+cat "$TMP1" | nl -w 2 -s ' '
+prompt
+choosed_line=$key
+
+# Action
+title "What to do?"
+echo " 1 mount"
+echo " 2 unmount"
+prompt
+
+# Choosen device
+device=$(get_lsblk_line "$choosed_line" | awk '{print $1}')
+
+if [ "$key" -eq 1 ]
+then
+    echo "Mounting..."
+    echo "udisksctl mount --block-device /dev/$device"
+    udisksctl mount --block-device /dev/$device
+elif [ "$key" -eq 2 ]
+then
+    echo "Unmounting"
+    echo "udisksctl unmount --block-device /dev/$device"
+    udisksctl unmount --block-device /dev/$device
+else
+    echo "Unknown action $key"
+fi
+
+# Cleanup
+rm -f "$TMP1" "$TMP2"
