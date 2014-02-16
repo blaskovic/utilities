@@ -17,7 +17,6 @@ function prompt()
 {
     echo -n "> "
     read key
-    echo "$key"
 }
 
 function get_lsblk_line()
