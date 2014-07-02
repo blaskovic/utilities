@@ -9,8 +9,8 @@ import sys
 import optparse
 import icalendar
 import textwrap
-
-from datetime import datetime
+import datetime
+import dateutil.rrule
 
 opts = None
 
@@ -25,7 +25,9 @@ def parse_args():
 
 def from_iso(date):
     if hasattr(date, 'dt'):
-        return datetime.date(date.dt)
+        if isinstance(date.dt, datetime.date):
+            return datetime.datetime.combine(date.dt, datetime.datetime.min.time())
+        return date.dt
     # XXX: This is a hack to deal with ISO format dates with a terminal
     # 'Z', which aren't handled by the datetime module.
     if str(date).endswith('Z'):
@@ -39,6 +41,18 @@ def mv_attr(attr):
         val = attr
 
     return val
+
+def make_rrule(rule):
+    freq = {}
+    freq['DAILY'] = dateutil.rrule.DAILY
+    freq['WEEKLY'] = dateutil.rrule.WEEKLY
+    freq['MONTHLY'] = dateutil.rrule.MONTHLY
+    freq['YEARLY'] = dateutil.rrule.YEARLY
+
+    print rule
+
+    #dts = list(dateutil.rrule.rrule([freq[rule.get('FREQ')[0]]], interval=10, byweekday=4, count=3))
+    print dts
 
 def get_items(event):
     items = {}
@@ -58,6 +72,8 @@ def get_items(event):
 
     items['description'] = event.get('description', [])
     items['location'] = event.get('location', [])
+    print event.viewvalues()
+    #make_rrule(event.get('RRULE', []))
     return items
 
 def print_vevent(event):
@@ -105,6 +121,9 @@ def parse_ics(args):
     # Fill array with events
     events = []
     for x in cal.walk():
+        if x.name == 'VEVENT':
+            events.append(get_items(x))
+        continue
         try:
             if x.name == 'VEVENT':
                 events.append(get_items(x))
@@ -119,7 +138,7 @@ def parse_ics(args):
     # Print these events
     for x in events:
         # Do we even want this?
-        if opts.from_date and x['event_start'] < datetime.date(datetime.strptime(str(opts.from_date), '%Y-%m-%d')):
+        if opts.from_date and x['event_start'] < datetime.datetime.strptime(str(opts.from_date), '%Y-%m-%d'):
             continue
         print_vevent(x)
 
@@ -129,6 +148,9 @@ def parse_ics(args):
 
 def main():
     global opts
+    opts, args = parse_args()
+    parse_ics(args)
+    return
     try:
         opts, args = parse_args()
         parse_ics(args)
