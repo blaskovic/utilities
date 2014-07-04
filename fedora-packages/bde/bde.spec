@@ -1,24 +1,31 @@
 Name:           bde
 Version:        0.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Blaskovic Desktop Environment
 
-Group:          Development/Tools
+Group:          User Interface/Desktops
 License:        GPLv3+
 URL:            https://github.com/blaskovic/dwm
 
 Source0:        https://github.com/blaskovic/dwm/archive/master/dwm-master.tar.gz
 Source1:        https://github.com/blaskovic/utilities/archive/master/utilities-master.tar.gz
 
+Requires:       bde-dwm
+Requires:       bde-utils
+
+%description
+Blaskovic super truper Desktop Environment based on DWM.
+
+%package dwm
+Summary:        DWM for BDE
+
+Requires:       sed
+Requires:       gawk
 Requires:       dmenu
 Requires:       slock
-Requires:       xsel
-Requires:       sed
-Requires:       /bin/uptime
-Requires:       /bin/amixer
-Requires:       /bin/awk
-Requires:       /bin/setxkbmap
+Requires:       alsa-utils
 Requires:       wmname
+Requires:       xorg-x11-xkb-utils
 Requires:       lxpolkit
 Requires:       acpi
 
@@ -26,14 +33,12 @@ BuildRequires:  libX11-devel
 BuildRequires:  libXinerama-devel
 BuildRequires:  libxcb-devel
 
-%description
-Blaskovic super truper Desktop Environment based on DWM.
-
-%package dwm
-Summary: DWM for BDE
-
 %package utils
-Summary: Utilities for BDE
+Summary:        Utilities for BDE
+
+Requires:       sed
+Requires:       gawk
+Requires:       xsel
 
 %description dwm
 DWM part of BDE
@@ -79,8 +84,13 @@ install -m755 view-ical/view-ical %{buildroot}%{_bindir}/view-ical
 %{_bindir}/screenshot
 %{_bindir}/view-ical
 
+%files
+
 
 %changelog
+* Fri Jul  4 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-4
+- Meta package 'bde'
+
 * Fri Jul  4 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-3
 - More requires
 
