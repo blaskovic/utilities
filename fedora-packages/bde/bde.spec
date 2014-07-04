@@ -1,6 +1,3 @@
-%global commit 2fd265f7987da757b28db9d9dc11e7db9119d14e
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-
 Name:           bde
 Version:        0.1
 Release:        2%{?dist}
@@ -33,22 +30,25 @@ Utilities for BDE
 
 %prep
 # http://www.rpm.org/max-rpm/s1-rpm-inside-macros.html
-%setup -q -c -T -b 0 -n dwm-master
-%setup -q -c -T -b 1 -n utilities-master
+%setup -q -T -b 0 -n dwm-master
+%setup -q -T -b 1 -n utilities-master
 
 %build
-pushd ..
-
-pushd dwm-master
+cd %{_builddir}
+cd dwm-master
 make
-popd
 
-popd
 
 %install
-pwd
+cd %{_builddir}
+cd dwm-master
 make install DESTDIR=%{buildroot} BINDIR=%{_bindir} DATADIR=%{_datadir}
-#install -m755 ../utilities-master/bmount/bmount %{buildroot}%{_bindir}/bmount
+
+cd %{_builddir}
+cd utilities-master
+install -m755 bmount/bmount %{buildroot}%{_bindir}/bmount
+install -m755 screenshot/screenshot %{buildroot}%{_bindir}/screenshot
+install -m755 view-ical/view-ical %{buildroot}%{_bindir}/view-ical
 
 %files dwm
 %{_mandir}/man1/dwm.1.gz
@@ -63,6 +63,8 @@ make install DESTDIR=%{buildroot} BINDIR=%{_bindir} DATADIR=%{_datadir}
 
 %files utils
 %{_bindir}/bmount
+%{_bindir}/screenshot
+%{_bindir}/view-ical
 
 
 %changelog

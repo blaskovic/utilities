@@ -12,16 +12,19 @@ spec = rpm.spec('bde.spec')
 for src in spec.sources:
     print src[0]" > $tmp
 
-pushd ~/rpmbuild/SOURCES
+OLD_DIR=`pwd`
+cd ~/rpmbuild/SOURCES
 
 while read sourceurl
 do
     echo "Source: $sourceurl"
     wget "$sourceurl"
 done < $tmp
+ls -l
 
-popd
-rpmbuild -bb bde.spec
+cd "$OLD_DIR"
+
+rpmbuild -ba bde.spec
 
 rm $tmp
 
