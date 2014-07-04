@@ -1,6 +1,6 @@
 Name:           bde
 Version:        0.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Blaskovic Desktop Environment
 
 Group:          Development/Tools
@@ -10,8 +10,21 @@ URL:            https://github.com/blaskovic/dwm
 Source0:        https://github.com/blaskovic/dwm/archive/master/dwm-master.tar.gz
 Source1:        https://github.com/blaskovic/utilities/archive/master/utilities-master.tar.gz
 
-Requires:       dmenu, slock
-BuildRequires:  libX11-devel, libXinerama-devel, libxcb-devel
+Requires:       dmenu
+Requires:       slock
+Requires:       xsel
+Requires:       sed
+Requires:       /bin/uptime
+Requires:       /bin/amixer
+Requires:       /bin/awk
+Requires:       /bin/setxkbmap
+Requires:       wmname
+Requires:       lxpolkit
+Requires:       acpi
+
+BuildRequires:  libX11-devel
+BuildRequires:  libXinerama-devel
+BuildRequires:  libxcb-devel
 
 %description
 Blaskovic super truper Desktop Environment based on DWM.
@@ -68,6 +81,9 @@ install -m755 view-ical/view-ical %{buildroot}%{_bindir}/view-ical
 
 
 %changelog
-* Wed Jul 2 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-1
+* Fri Jul  4 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-3
+- More requires
+
+* Wed Jul  2 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-1
 - Initial spec file
 
