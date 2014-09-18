@@ -1,0 +1,21 @@
+#!/bin/bash
+
+FONT="-*-terminus-medium-r-*-*-14-*-*-*-*-*-*-*"
+DMENU="dmenu -fn $FONT"
+
+selected=$($DMENU -l 5 << EOF
+sdcv
+aspell
+EOF
+)
+
+case "$selected" in
+    sdcv)
+        word=$(echo | $DMENU -p "Your word:")
+        sdcv -n $word | $DMENU -l 30 | xsel -i -p
+        ;;
+    aspell)
+        word=$(echo | $DMENU -p "Your word:")
+        echo $word | aspell -a | $DMENU -l 30 | xsel -i -p
+        ;;
+esac
