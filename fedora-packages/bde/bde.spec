@@ -1,6 +1,6 @@
 Name:           bde
 Version:        0.1
-Release:        4%{?dist}
+Release:        8%{?dist}
 Summary:        Blaskovic Desktop Environment
 
 Group:          User Interface/Desktops
@@ -39,6 +39,8 @@ Summary:        Utilities for BDE
 Requires:       sed
 Requires:       gawk
 Requires:       xsel
+Requires:       sdcv
+Requires:       aspell
 
 %description dwm
 DWM part of BDE
@@ -67,6 +69,7 @@ cd utilities-master
 install -m755 bmount/bmount %{buildroot}%{_bindir}/bmount
 install -m755 screenshot/screenshot %{buildroot}%{_bindir}/screenshot
 install -m755 view-ical/view-ical %{buildroot}%{_bindir}/view-ical
+install -m755 bdict/bdict %{buildroot}%{_bindir}/bdict
 
 %files dwm
 %{_mandir}/man1/dwm.1.gz
@@ -83,11 +86,21 @@ install -m755 view-ical/view-ical %{buildroot}%{_bindir}/view-ical
 %{_bindir}/bmount
 %{_bindir}/screenshot
 %{_bindir}/view-ical
+%{_bindir}/bdict
 
 %files
 
 
 %changelog
+* Fri Oct  3 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-8
+- bump version for newer utilities (screenshot patch)
+
+* Thu Sep 18 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-7
+- requires for bdict added
+
+* Thu Sep 18 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-6
+- bdict added
+
 * Fri Jul  4 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-4
 - Meta package 'bde'
 
