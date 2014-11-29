@@ -1,0 +1,35 @@
+
+  <input name="special_p4_form" value="1" type="hidden">
+  <input name="login_form" value="1" type="hidden">
+  <input name="sentTime" value="1411666968" type="hidden">
+<input name="sv[fdkey]" value="BR0qqTALg9" type="hidden">
+<table align="center" cellpadding="2">
+<tbody><tr><td colspan="3"><h2>Přihlášení do Informačního systému VUT</h2><br></td></tr>
+        <tr>
+            <td><label for="login7">Login</label></td>
+            <td><input tabindex="4" id="login7" accesskey="l" name="LDAPlogin" value="" size="24" maxlength="60" onfocus="this.select()" type="text"></td>
+            <td><span class="jqttip">(nápověda)</span></td>
+        </tr>
+        <tr>
+            <td>
+                <label for="passwd7">VUTheslo&nbsp;</label>            </td>
+            <td><input tabindex="5" id="passwd7" accesskey="h" name="LDAPpasswd" value="" size="24" maxlength="60" onfocus="this.select()" type="password"></td>
+            <td>
+            <span class="jqttip">(nápověda)</span>            </td>
+        </tr>
+
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+              <div><button class="but" tabindex="6" type="submit" name="login">Přihlásit se</button></div>
+              <br><br>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <input name="pamatovat_login" type="checkbox">&nbsp;Automaticky doplňovat přihlašovací jméno.            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+<ul><li class="b"><a href="https://www.vutbr.cz/cvis/is/neznam-vut-login" target="_blank" title="Návod jak postupovat v případě, že neznáte VUTlogin nebo VUTheslo.">Co dělat, pokud nefunguje přihlášení nebo neznáte VUTlogin</a></li><li>Musíte mít <a href="https://www.vutbr.cz/cvis/is/cookies" target="_blank" title="Kliknutím se dostanete na stránku, kde se dozvíte co dělat v případě problémů s přihlašováním.">povoleny cookies</a>.</li><li>Jste nově přijatý uchazeč a máte jen inicializační heslo?<br>Použijte <a href="https://www.vutbr.cz/login-vutbr-cz">formulář pro vytvoření přístupu do IS VUT</a></li></ul></td></tr></tbody></table>
