@@ -1,6 +1,6 @@
 Name:           bde
 Version:        0.1
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        Blaskovic Desktop Environment
 
 Group:          User Interface/Desktops
@@ -92,6 +92,9 @@ install -m755 bdict/bdict %{buildroot}%{_bindir}/bdict
 
 
 %changelog
+* Tue Nov 11 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-9
+- bump version for newer utilities (screenshot upload path)
+
 * Fri Oct  3 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-8
 - bump version for newer utilities (screenshot patch)
 
