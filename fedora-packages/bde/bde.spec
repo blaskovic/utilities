@@ -1,6 +1,6 @@
 Name:           bde
 Version:        0.1
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Blaskovic Desktop Environment
 
 Group:          User Interface/Desktops
@@ -28,6 +28,7 @@ Requires:       wmname
 Requires:       xorg-x11-xkb-utils
 Requires:       lxpolkit
 Requires:       acpi
+Requires:       xbacklight
 
 BuildRequires:  libX11-devel
 BuildRequires:  libXinerama-devel
@@ -92,6 +93,9 @@ install -m755 bdict/bdict %{buildroot}%{_bindir}/bdict
 
 
 %changelog
+* Tue Jan 27 2015 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-11
+- xbacklight require added
+
 * Fri Dec 19 2014 Branislav Blaskovic <branislav@blaskovic.sk> - 0.1-10
 - bump version for newer version of dwm-panel
 
