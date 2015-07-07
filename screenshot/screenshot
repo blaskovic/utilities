@@ -27,7 +27,8 @@ zenity --question --title 'Upload' --text 'Want to upload this screenshot?' && {
     echo $url
     echo $url >> ~/screenshot.list
     echo -n $url | xsel -b -i
-    open-browser.sh "$url" &
+    echo -n $url | xsel
+    open-browser.sh &
     rm -f ~/$name
 } || {
     echo $name

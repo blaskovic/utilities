@@ -1,0 +1,13 @@
+#!/bin/bash
+
+wget -O page.html $1
+
+images=$(lynx  -dump -listonly  divine.html | grep -i -e jpg -e png | awk '{print $2}')
+
+for img in $images
+do
+    wget $img
+done
+
+rm page.html
+
