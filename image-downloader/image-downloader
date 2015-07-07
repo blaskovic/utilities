@@ -2,7 +2,8 @@
 
 wget -O page.html $1
 
-images=$(lynx  -dump -listonly  divine.html | grep -i -e jpg -e png | awk '{print $2}')
+images=$(lynx  -dump -listonly  page.html | grep -i -e jpg -e png | awk '{print $2}')
+echo $images
 
 for img in $images
 do
